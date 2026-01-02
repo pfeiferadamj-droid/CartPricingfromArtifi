@@ -1,0 +1,5 @@
+{
+  "name": "Salesforce Commerce: Decorations Pricing Simulator",
+  "description": "A high-fidelity simulator for a Salesforce Lightning Web Component (LWC) that calculates custom product decoration pricing, persists it to CartItem fields, and triggers a Commerce Cart Orchestrator recalculation flow.",
+  "requestFramePermissions": []
+}
