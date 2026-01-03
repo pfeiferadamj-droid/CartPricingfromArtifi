@@ -11,7 +11,10 @@
   "dependencies": {
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "lucide-react": "^0.562.0"
+    "lucide-react": "^0.562.0",
+    "lwc": "^8.26.2",
+    "lightning": "^10.27.5",
+    "@salesforce/apex": "^0.0.21"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

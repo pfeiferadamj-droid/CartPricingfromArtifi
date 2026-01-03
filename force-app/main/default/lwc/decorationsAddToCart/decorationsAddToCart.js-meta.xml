@@ -1,0 +1,18 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Decorations Add To Cart (Headless)</masterLabel>
+    <description>Calculates decoration pricing and adds to cart. Place on PDP.</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="webstoreId" type="String" label="Webstore ID" default="{!webstoreId}"/>
+            <property name="effectiveAccountId" type="String" label="Effective Account ID" default="{!effectiveAccountId}"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

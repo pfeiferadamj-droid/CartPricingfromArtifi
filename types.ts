@@ -11,22 +11,22 @@ export interface PricebookEntry {
   UnitPrice: number;
   IsActive: boolean;
   CurrencyIsoCode: string;
+  Pricebook2Id: string;
 }
 
-export interface ProductEstimatorDecoration {
+export interface B2B_Store_Defaults__mdt {
+  DeveloperName: string;
+  Authenticated_Price_Book_ID__c: string;
+  Flat_Embroidery_Product_Code__c: string;
+  ThreeD_Embroidery_Product_Code__c: string;
+}
+
+export interface Product_Estimator_Decoration__c {
   Id: string;
-  Product__c: string;
-  DecorationCode__c: string;
-  ViewCode__c: string;
-  MinQty__c: number | null;
-  MaxQty__c: number | null;
-  PerUnitAddOn__c: number;
-  PerColorAddOn__c?: number;
-  PerStitchAddOn__c?: number;
-  SetupFee__c?: number;
+  Product__c: string; // Lookup to Product2 (The garment)
+  Decoration__c: string; // Lookup to Product2 (The decoration type product)
+  Override_Price__c: number;
   IsActive__c: boolean;
-  StartDate__c?: string;
-  EndDate__c?: string;
 }
 
 export interface DesignImage {
@@ -37,7 +37,7 @@ export interface DesignImage {
 
 export interface DesignView {
   viewName: string;
-  viewCode: string;
+  viewCode: string; 
   image: DesignImage[];
   text: any[];
   decorationCode: string;
@@ -53,21 +53,20 @@ export interface PricingResult {
   product2Id: string;
   pricebookEntryId: string;
   baseUnitPrice: number;
-  perUnitDecorationTotal: number;
-  allocatedSetupPerUnit: number;
+  decorationOverride: number;
+  additionalLocationTotal: number;
   computedUnitPrice: number;
   quantity: number;
   pricingFingerprint: string;
+  logs: string[];
 }
 
 export interface CartItem {
   Id: string;
   Product2Id: string;
   Quantity: number;
-  UnitPrice: number; // Native
-  ComputedUnitPrice__c: number; // Custom
-  DecorationUnitAdj__c: number; // Custom
-  AllocatedSetupPerUnit__c: number; // Custom
-  PricingFingerprint__c: string; // Custom
+  UnitPrice: number; 
+  ComputedUnitPrice__c: number;
+  PricingFingerprint__c: string;
   TotalLineAmount: number;
 }

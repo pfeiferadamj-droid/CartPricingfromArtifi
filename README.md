@@ -1,20 +1,33 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
 
-# Run and deploy your AI Studio app
+# LWC: Decorations Pricing on Add to Cart
 
-This contains everything you need to run your app locally.
+A high-performance, headless Lightning Web Component designed to calculate dynamic decoration pricing for B2B/D2C Commerce.
 
-View your app in AI Studio: https://ai.studio/apps/drive/136dWAs2hlxjxZl43xNECbX1bVjxMUHq6
+## 🚀 Overview
+The component intercepts the **Add to Cart** action, processes a JSON payload from the design tool, and computes a final unit price based on organizational business rules. It operates "invisibly" (headless) and relies on a server-side Orchestrator to ensure pricing consistency.
 
-## Run Locally
+## 🛠 Business Logic
+The pricing engine follows these strict steps:
 
-**Prerequisites:**  Node.js
+1.  **Metadata Lookup**: Retrieves `Authenticated_Price_Book_ID__c` from the `Shop_Defaults` record in the `B2B_Store_Defaults__mdt` custom metadata object.
+2.  **Base Price**: Resolves the `PricebookEntry` for the product SKU (main item) using the Auth Price Book ID.
+3.  **Front Decoration (3D Override)**: 
+    *   Inspects the `designData` for a `viewCode` of `FRONT`.
+    *   If `decorationCode` is `3DEMBROIDERY`, it queries `Product_Estimator_Decoration__c` for an `Override_Price__c`.
+    *   This override is added to the base unit price.
+4.  **Additional Locations**:
+    *   Identifies other views (BACK, LEFT, RIGHT) containing an image.
+    *   Queries the Auth Price Book for the unit price of the corresponding decoration product (e.g., "Flat Embroidery Decoration").
+    *   Adds this price to the item total.
 
+## ⚙️ Integration Summary
+Integrating this into a Salesforce Commerce environment involves:
+1.  **Schema Setup**: Creating the `Product_Estimator_Decoration__c` custom object and `CartItem` custom fields.
+2.  **Metadata**: Configuring the `B2B_Store_Defaults__mdt` record.
+3.  **Apex**: Deploying the Pricing Service and the Cart Orchestrator Extension.
+4.  **LWC**: Placing the headless component on the Product Detail Page (PDP).
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+**[See INTEGRATION_GUIDE.md for step-by-step instructions](./INTEGRATION_GUIDE.md)**
+
+## 🛡️ Cart Consistency
+To prevent the platform from reverting prices, the solution uses a **Cart Orchestrator** (Commerce Extension) that intercepts cart calculations and applies the `ComputedUnitPrice__c` stored on the line item.
